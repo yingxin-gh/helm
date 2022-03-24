@@ -10,7 +10,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.2
 	github.com/Masterminds/vcs v1.13.1
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535
-	github.com/containerd/containerd v1.5.8
+	github.com/containerd/containerd v1.6.2
 	github.com/cyphar/filepath-securejoin v0.2.3
 	github.com/distribution/distribution/v3 v3.0.0-20211118083504-a29a3c99a684
 	github.com/docker/docker v20.10.11+incompatible
@@ -33,13 +33,13 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
-	golang.org/x/term v0.0.0-20210220032956-6a3ed077a48d
-	k8s.io/api v0.22.4
+	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b
+	k8s.io/api v0.22.5
 	k8s.io/apiextensions-apiserver v0.22.4
-	k8s.io/apimachinery v0.22.4
-	k8s.io/apiserver v0.22.4
+	k8s.io/apimachinery v0.22.5
+	k8s.io/apiserver v0.22.5
 	k8s.io/cli-runtime v0.22.4
-	k8s.io/client-go v0.22.4
+	k8s.io/client-go v0.22.5
 	k8s.io/klog/v2 v2.30.0
 	k8s.io/kubectl v0.22.4
 	oras.land/oras-go v1.0.0
