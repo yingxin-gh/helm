@@ -28,12 +28,12 @@ import (
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 
-	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/cli/output"
-	"helm.sh/helm/v3/pkg/cli/values"
-	"helm.sh/helm/v3/pkg/helmpath"
-	"helm.sh/helm/v3/pkg/postrender"
-	"helm.sh/helm/v3/pkg/repo"
+	"helm.sh/helm/v4/pkg/action"
+	"helm.sh/helm/v4/pkg/cli/output"
+	"helm.sh/helm/v4/pkg/cli/values"
+	"helm.sh/helm/v4/pkg/helmpath"
+	"helm.sh/helm/v4/pkg/postrender"
+	"helm.sh/helm/v4/pkg/repo"
 )
 
 const (
@@ -61,6 +61,7 @@ func addChartPathOptionsFlags(f *pflag.FlagSet, c *action.ChartPathOptions) {
 	f.StringVar(&c.CertFile, "cert-file", "", "identify HTTPS client using this SSL certificate file")
 	f.StringVar(&c.KeyFile, "key-file", "", "identify HTTPS client using this SSL key file")
 	f.BoolVar(&c.InsecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the chart download")
+	f.BoolVar(&c.PlainHTTP, "plain-http", false, "use insecure HTTP connections for the chart download")
 	f.StringVar(&c.CaFile, "ca-file", "", "verify certificates of HTTPS-enabled servers using this CA bundle")
 	f.BoolVar(&c.PassCredentialsAll, "pass-credentials", false, "pass credentials to all domains")
 }
@@ -71,7 +72,7 @@ func bindOutputFlag(cmd *cobra.Command, varRef *output.Format) {
 	cmd.Flags().VarP(newOutputValue(output.Table, varRef), outputFlag, "o",
 		fmt.Sprintf("prints the output in the specified format. Allowed values: %s", strings.Join(output.Formats(), ", ")))
 
-	err := cmd.RegisterFlagCompletionFunc(outputFlag, func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+	err := cmd.RegisterFlagCompletionFunc(outputFlag, func(_ *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
 		var formatNames []string
 		for format, desc := range output.FormatsWithDesc() {
 			formatNames = append(formatNames, fmt.Sprintf("%s\t%s", format, desc))
@@ -194,7 +195,7 @@ func (p *postRendererArgsSlice) GetSlice() []string {
 	return p.options.args
 }
 
-func compVersionFlag(chartRef string, toComplete string) ([]string, cobra.ShellCompDirective) {
+func compVersionFlag(chartRef string, _ string) ([]string, cobra.ShellCompDirective) {
 	chartInfo := strings.Split(chartRef, "/")
 	if len(chartInfo) != 2 {
 		return nil, cobra.ShellCompDirectiveNoFileComp
